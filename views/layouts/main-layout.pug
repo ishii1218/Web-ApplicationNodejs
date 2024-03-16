@@ -1,0 +1,23 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title #{pageTitle}
+        //- every page should pass in a pagetitle
+        link(rel="stylesheet", href="/css/main.css" )
+        block styles 
+        //- 2 hooks used to plug in more values to these places
+    body 
+        header.main-header
+            nav.main-header__nav 
+                ul.main-header__item-list
+                    li.main-header__item
+                        a(href="/",class=(path==='/' ? 'active':'')) Shop
+                    li.main-header__item 
+                        a(href="/admin/add-product",class=(path==='/admin/add-product' ? 'active':'')) Add product
+                        //- iff path equals '/admin/add-product' then  active
+
+        block content
+     
+        
