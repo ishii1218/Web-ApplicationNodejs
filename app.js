@@ -3,6 +3,7 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const errorController = require('./controllers/error');
 // const expressHbs = require('express-handlebars');
 
 //(ctrl+express) goes to the source file which is a typescript file
@@ -26,7 +27,7 @@ app.set('views','views');
 //View engine allows us to tell express hey for any dynamic templates we're trying to render and there
 //will be a special function for doing that,please use this engine we're registering here and views allows us to tell express where to find these dynamic views. So what we can do here is we can app set and set the view here,
 //So now we're telling express that we want to compile dynamic templates with the pug engine and where to find these templates.
-const adminData = require('./routes/admin');//imports router object in admin file
+const adminRoutes = require('./routes/admin');//imports router object in admin file
 const shopRoutes = require('./routes/shop');
 // app.use((req, res, next) => {
 //     console.log('In the Middleware')
@@ -49,13 +50,10 @@ app.use(express.static(path.join(__dirname,'public'))); //gives a folder read ac
 //     console.log(req.body);
 //     res.redirect('/');
 // });
-app.use('/admin',adminData.routes);//admin is a filter only url with /admin willrun
+app.use('/admin',adminRoutes);//admin is a filter only url with /admin willrun
 app.use(shopRoutes);
 
-app.use((req,res,next) =>{
-    res.status(404).render('404',{pageTitle:'Page Not Found'});
-
-});
+app.use(errorController.get404);
 // app.use('/',(req, res, next) => {
 //     res.send('<h1>Hello From Express!</h1>');
 // }); 
